@@ -113,13 +113,13 @@ int main(int argc, char** argv) {
 
   LCDInit();
   LCDClear();
-  LCDBitmap(SFEFlame);
+///  LCDBitmap(SFEFlame);
   //delay(1000);
 
   //LCDClear();
-  //LCDString("Hello World!");
+ LCDString("Hello World! Everything OK");
  // delay(1000);
   
-    return (EXIT_SUCCESS);
+    return 0;
 }
 

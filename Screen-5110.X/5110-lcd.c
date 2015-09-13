@@ -1,5 +1,6 @@
 #include "5110-lcd.h"
 #include <p18f4550.h>
+#include <xc.h>
 
 #define OUTPUT 0
 #define INTPUT 1
@@ -128,6 +129,7 @@ static const unsigned char ASCII[][5] = {
 void LCDWrite(unsigned char data_or_command, unsigned char data) {
     unsigned char i = 0;
     unsigned char mask = 0x80;
+    unsigned char tmp = data;
   PIN_DC = data_or_command; //Tell the LCD that we are writing either to data or a command
 
   //Send the data
@@ -137,10 +139,10 @@ void LCDWrite(unsigned char data_or_command, unsigned char data) {
   TRISDbits.PIN_SCLK = OUTPUT;
   PIN_SCLK = LOW;
   for ( i = 0; i < 8 ; i++){
-      mask >>= i;
-      PIN_SDIN = (data & mask) >> (7 - i);
+      if (tmp & mask) { PIN_SDIN = HIGH ;} else{ PIN_SDIN = LOW ;}
       PIN_SCLK = HIGH;
       PIN_SCLK = LOW;
+      tmp = tmp << 1;
   }
   PIN_SCE = HIGH;
 }
